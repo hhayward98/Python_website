@@ -22,6 +22,9 @@ class HTTPRequest_handler(SimpleHTTPRequestHandler):
 		# prints client address to server when request is made
 		print(self.client_address)
 
+		# create function for 2 players.
+
+
 		# pasrse the url sent from client before path is changed
 		parsed = urlparse(self.path)
 
@@ -31,10 +34,11 @@ class HTTPRequest_handler(SimpleHTTPRequestHandler):
 		# sends the dict to function. 
 		self.pasere_Query(parsedqs)
 
+
+
+
 		# updates the path to path of server files.
 		self.path = self.path_prefix + self.path
-
-		
 
 		# sending files to client 
 		try:
@@ -53,9 +57,14 @@ class HTTPRequest_handler(SimpleHTTPRequestHandler):
 
 
 
-	def pasere_Query(self):
-		pass 
-
+	def pasere_Query(self,queryDict):
+		ans = queryDict["query"]
+		f =open("Files/ans.txt", "w")
+		f.write(ans)
+		f.close()
+		
+	def Set_players(self):
+		pass
 
 
 def run_server(server_class=HTTPServer, handler_class=BaseHTTPRequestHandler):

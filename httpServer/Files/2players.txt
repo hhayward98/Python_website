@@ -1,0 +1,5 @@
+IDEA1: to solve que for 2 players I can create a program the runs based off ans provided by players.
+by setting a loop that will only run the game when both player ans files have ans in them I can probally solve que issues. 
+if both files are empty to start with and then wiped clean after each game this solotion might work. 
+
+IDEA2: I can create a function/or class that takes a client address and sets the client address to a title such as Player1 and Player2. then I can create a way to tell the client that they are waiting for another player.

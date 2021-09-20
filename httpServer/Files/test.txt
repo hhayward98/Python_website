@@ -1,0 +1,2 @@
+Congrats the Test is working correctly
+This .txt file was sent by server and read by client
