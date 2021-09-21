@@ -17,7 +17,7 @@ class HTTPRequest_handler(SimpleHTTPRequestHandler):
 		super().__init__(*args,**kwargs)
 
 
-	def Get_req(self):
+	def do_GET(self):
 
 		# prints client address to server when request is made
 		print(self.client_address)
@@ -27,20 +27,32 @@ class HTTPRequest_handler(SimpleHTTPRequestHandler):
 
 		# pasrse the url sent from client before path is changed
 		parsed = urlparse(self.path)
+		print(parsed.query)
+
+
 
 		# converts the parsed query into a Dict.
-		parsedqs = parse_qs(parsed.query)
+		# parsedqs = parse_qs(parsed.query)
+		# print(parsedqs)
 
+		# if len(parsedqs) == 0:
+		# 	print("dict is empty")
+		# elif len(parsedqs) > 0:
+		# 	print(parsedqs)
 		# sends the dict to function. 
-		self.pasere_Query(parsedqs)
 
 
+		self.pasere_Query(parsed.query)
+		
+		self.path = parsed.path
+		print(self.path)
 
 
 		# updates the path to path of server files.
 		self.path = self.path_prefix + self.path
 
 		# sending files to client 
+
 		try:
 			# opening the server file requested from client.
 			f = open(self.path, 'rb')
@@ -55,13 +67,28 @@ class HTTPRequest_handler(SimpleHTTPRequestHandler):
 			self.send_response(HTTPStatus.NOT_FOUND)
 			self.end_headers()
 
+		self.Report()
 
 
+
+	# this function writes the query sent from client to a file. 
 	def pasere_Query(self,queryDict):
-		ans = queryDict["query"]
+		ans = queryDict
 		f =open("Files/ans.txt", "w")
 		f.write(ans)
 		f.close()
+
+
+	# this function reads the query that was written to the file. 
+	def Report(self):
+		buffer_size = 10
+		print(self.path)
+		Aws_path = self.path_prefix + '/ans.txt'
+		f = open(Aws_path, 'r')
+		ans = f.read(buffer_size)
+		print(ans)
+
+
 		
 	def Set_players(self):
 		pass
