@@ -3,6 +3,12 @@ import shutil
 from http import HTTPStatus 
 from http.server import SimpleHTTPRequestHandler, HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
+import time
+from socketserver import ThreadingMixIn
+
+class ThredingHTTPServer(ThreadingMixIn, HTTPServer):
+	pass
+
 
 
 class HTTPRequest_handler(SimpleHTTPRequestHandler):
@@ -10,17 +16,52 @@ class HTTPRequest_handler(SimpleHTTPRequestHandler):
 	version = "My_HTTP_Server"
 	path_prefix = "Files"
 
+	player1 = 'l'
+	player2 = 'l'
+	count = 0
+
+
 	def __init__(self, *args, directory=None, **kwargs):
 		if directory is None:
 			directory = os.getcwd()
 		self.directory = directory
+
 		super().__init__(*args,**kwargs)
+
+
+
 
 
 	def do_GET(self):
 
 		# prints client address to server when request is made
 		print(self.client_address)
+
+
+		# while self.count != 2:
+		# 	print("Waiting on player2 to join....")
+		# 	time.sleep(5)
+
+		# while self.count != 2:
+
+
+		# 	if len(self.player1) > 2:
+		# 		if self.count != 1:
+		# 			self.count + 1
+		# 		print("Waiting on player2 to join....")
+		# 		time.sleep(5)
+		# 		self.do_GET()
+
+		# 	if len(self.player2) > 2:
+		# 		if self.count != 2:
+		# 			self.count + 1
+		# 		print("both players have connected")
+
+		# 	self.Set_players(self.client_address)
+
+		self.Set_players(self.client_address)
+
+		print(self.player1)
 
 		# create function for 2 players.
 
@@ -29,17 +70,6 @@ class HTTPRequest_handler(SimpleHTTPRequestHandler):
 		parsed = urlparse(self.path)
 		print(parsed.query)
 
-
-
-		# converts the parsed query into a Dict.
-		# parsedqs = parse_qs(parsed.query)
-		# print(parsedqs)
-
-		# if len(parsedqs) == 0:
-		# 	print("dict is empty")
-		# elif len(parsedqs) > 0:
-		# 	print(parsedqs)
-		# sends the dict to function. 
 
 
 		self.pasere_Query(parsed.query)
@@ -90,14 +120,29 @@ class HTTPRequest_handler(SimpleHTTPRequestHandler):
 
 
 		
-	def Set_players(self):
-		pass
+	def Set_players(self,client_info):
+		IP = client_info[0]
+
+		if len(self.player1) > 2:
+			
+			return 0
+
+		if len(self.player1) < 2:
+			self.player1 = IP
+			print("Player1 is: " + IP)
+		elif len(self.player1) > 1:
+			self.player2 = IP
+			print("Player2 is: " + IP)
+
 
 
 def run_server(server_class=HTTPServer, handler_class=BaseHTTPRequestHandler):
 	server_address = ('', 8000)
-	http_object = server_class(server_address, handler_class)
-	http_object.serve_forever()
+	Http_object1 = ThredingHTTPServer(server_address, handler_class)
+	Http_object1.serve_forever()
+	# http_object = server_class(server_address, handler_class)
+	# http_object.serve_forever()
+
 
 if __name__ == "__main__":
 	run_server(HTTPServer, HTTPRequest_handler)
