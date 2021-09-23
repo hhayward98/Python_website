@@ -9,7 +9,10 @@ from socketserver import ThreadingMixIn
 class ThredingHTTPServer(ThreadingMixIn, HTTPServer):
 	pass
 
-
+# call a class inside a class 
+# clients connects and info is saved to different class/ or file
+# that way we can save individual information
+# once game is over we should reset e
 
 class HTTPRequest_handler(SimpleHTTPRequestHandler):
 
