@@ -46,9 +46,10 @@ def main():
                 payload = {"throw" : throw}
                 r = requests.post(f'http://localhost:8000/throw/{NAME}', json=json.dumps(payload))
                 if (r.status_code == requests.codes.conflict):
-                    print("\nYou played a duplicate throw\n")
+                    print(f"\nStatus Code: {r.status_code} -- You played a duplicate throw.\n")
+
                 else:
-                    print(f"\n {r.text} \n")
+                    print(f"\nStatus Code: {r.status_code} -- {r.text} \n")
             else:
                 print('\nPlease enter Rock, Paper or Scissors.')
 
@@ -59,7 +60,7 @@ def main():
         elif (int(choice) == 4):
             payload = {"reset" : 'True'}
             r = requests.post(f'http://localhost:8000/reset/{NAME}', json=json.dumps(payload))
-            print(f"\n {r.text} \n")
+            print(f"\nStatus Code: {r.status_code} -- {r.text} \n")
         elif (int(choice) == 5): 
             print("\nThanks for playing!")
             exitCommand = False
