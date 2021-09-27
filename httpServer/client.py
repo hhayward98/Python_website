@@ -11,8 +11,6 @@ SERVER =  "127.0.0.1" #Gets local ip
 
 
 
-
-
 NAME = ''
 
 
