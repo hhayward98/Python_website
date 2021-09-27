@@ -8,26 +8,6 @@ FORMAT = "utf-8"
 PORT = 8080
 SERVER = socket.gethostbyname(socket.gethostname()) #Gets local ip
 
-# POST /games/new
-
-# Protocall
-
-# POST /new: <NAME>
-# -> 200: Joined Game | Two Players Have Joined
-
-# POST <NAME>/throw: <rock|paper|scissors>
-# -> 200: waiting for other player, you can't throw a play | Throw recorded
-
-# GET /gamescore
-# -> 200: score | game lost | game won
-
-# GET /turnresult/
-# -> 200: won with <your throw> to <opponents throw> | lost with <your throw> to <opponents throw>
-
-# POST /<NAME>/reset/
-# -> 200: You have requested to reset | you already requested to reset | Game has reset
-
-
 
 
 def startGame():
@@ -93,7 +73,7 @@ class MyHTTPRequestHandler(SimpleHTTPRequestHandler):
                 self.end_headers()
                 self.wfile.write(("You have joined the game!").encode())
 
-                startGame()
+                # startGame()
             else:
                 self.send_response(HTTPStatus.OK)
                 self.end_headers()
@@ -197,6 +177,8 @@ class MyHTTPRequestHandler(SimpleHTTPRequestHandler):
 
     def playResult(self):
         if (os.path.exists("www/player1.json") and os.path.exists("www/player2.json")):
+            self.wfile.write(("Evaluating Result of game").encode())
+            startGame()
             pf1 = open("www/player1.json" , 'r+')
             playerData1 = json.load(pf1)
             pf2 = open("www/player2.json" , 'r+')
