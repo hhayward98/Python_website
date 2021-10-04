@@ -15,7 +15,7 @@ NAME = ''
 
 def main():
     exitCommand = True
-
+    endGame = True
     print("welcome to RO-SHAM-BO")
     NAME = input("\nPlease enter your name: ")
 
@@ -74,7 +74,7 @@ def main():
                     endGame = False
                 else:
                     print("\nPlease enter an option from the menu.\n")
-        elif (int(choice) == 2): 
+        elif (int(choice_game) == 2): 
             r = requests.post(f'http://localhost:8000/exit/{NAME}', json=json.dumps(payload))
             print("\nThanks for playing!")
             exitCommand = False

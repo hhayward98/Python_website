@@ -50,6 +50,7 @@ class MyHTTPRequestHandler(SimpleHTTPRequestHandler):
                 self.send_response(HTTPStatus.OK)
                 self.end_headers()
                 self.wfile.write((response).encode())
+                # write response to both players.
 
             except OSError:
                 self.send_response(HTTPStatus.NOT_FOUND)
